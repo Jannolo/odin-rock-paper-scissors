@@ -81,9 +81,9 @@ function game(playerSelection) {
     }
 
     playerChoicePara = document.createElement('p');
-    playerChoicePara.textContent = 'The player chose: ' + playerSelection;
+    playerChoicePara.textContent = 'The player chose: ' + playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1);
     computerChoicePara = document.createElement('p');
-    computerChoicePara.textContent = 'The computer chose: ' + computerSelection;
+    computerChoicePara.textContent = 'The computer chose: ' + computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1);
     scorePara = document.createElement('p');
     scorePara.textContent = 'The score is ' + score;
 
