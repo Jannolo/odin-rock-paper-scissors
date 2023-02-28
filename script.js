@@ -39,35 +39,71 @@ function play(playerChoice, computerChoice) {
     }
 }
 
-function game() {
-    let score = 0;
+const buttons = document.querySelectorAll('button');
 
-    for (let i = 0; i < 5; i++) {
-        let playerSelection= prompt("What do you want to choose?");
-        let computerSelection = getComputerChoice();
-        let res = 0;
-        res = play(playerSelection, computerSelection);
-        console.log(res);
-        switch (res) {
-            case 1:
-                score += 1;
-                break;
-            case -1:
-                score -= 1;
-                break;
+buttons.forEach(button => {
+    button.addEventListener('click', function (e) {
+        if (playerChoicePara != null) {
+            div.removeChild(playerChoicePara);
+            div.removeChild(computerChoicePara);
+            div.removeChild(scorePara);
         }
-        console.log('The player chose: ' + playerSelection);
-        console.log('The computer chose: ' + computerSelection)
-        console.log('The score is ' + score);
+
+        game(e.target.id);
+
+        //console.log(e.target.id);
+    })
+});
+
+
+const div = document.querySelector('div');
+let playerChoicePara;
+let computerChoicePara;
+let scorePara;
+let winnerPara;
+
+let score = 0;
+let rounds = 0;
+
+function game(playerSelection) {
+
+    let computerSelection = getComputerChoice();
+    let res = 0;
+    res = play(playerSelection, computerSelection);
+    console.log(res);
+    switch (res) {
+        case 1:
+            score += 1;
+            break;
+        case -1:
+            score -= 1;
+            break;
     }
 
-    if (score > 0) {
-        console.log("The player has won!");
-    } else if (score < 0) {
-        console.log('The computer has won!');
-    } else {
-        console.log("It's a draw after 5 games!");
+    playerChoicePara = document.createElement('p');
+    playerChoicePara.textContent = 'The player chose: ' + playerSelection;
+    computerChoicePara = document.createElement('p');
+    computerChoicePara.textContent = 'The computer chose: ' + computerSelection;
+    scorePara = document.createElement('p');
+    scorePara.textContent = 'The score is ' + score;
+
+    div.appendChild(playerChoicePara);
+    div.appendChild(computerChoicePara);
+    div.appendChild(scorePara);
+
+
+    rounds++;
+    if (rounds == 5) {
+        winnerPara = document.createElement('h3');
+        if (score > 0) {
+            winnerPara.textContent = "The player has won!";
+        } else if (score < 0) {
+            winnerPara.textContent = 'The computer has won!';
+        } else {
+            winnerPara.textContent = "It's a draw after 5 games!";
+        }
+        rounds = 0;
+        div.appendChild(winnerPara);
     }
 }
 
-game();
